@@ -1,4 +1,9 @@
 
+using CarDealershipApplication.Data;
+using CarDealershipApplication.Data.Models;
+using CarDealershipApplication.Data.Services;
+using Microsoft.EntityFrameworkCore;
+
 namespace CarDealershipApplication
 {
     public class Program
@@ -14,7 +19,22 @@ namespace CarDealershipApplication
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            //Configure AppDbContext
+            builder.Services.AddDbContext<AppDbContext>(options =>
+            {
+                //options.UseSqlServer(builder.Configuration.GetConnectionString("Data Source=ILBA\\SQLEXPRESS;Initial Catalog=CarDealership-db;Integrated Security=True;Pooling=False"));
+
+                options.UseSqlServer("Data Source=ILBA\\SQLEXPRESS;Initial Catalog=CarDealership-db;Integrated Security=True;Pooling=False;TrustServerCertificate=true");
+            });
+
+            //Configure Services
+            builder.Services.AddScoped<CarDealershipService>();
+            builder.Services.AddScoped<CarService>();
+
             var app = builder.Build();
+
+            // Seed the database
+            AppDbInitializer.Seed(app);
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
