@@ -1,16 +1,17 @@
 ﻿using CarDealershipApplication.Data.Models;
 using CarDealershipApplication.Data.ViewModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace CarDealershipApplication.Data.Services
 {
-    public class CarDealershipService
+    public class CarDealershipService:ICarDealershipsService
     {
         private AppDbContext _context;
         public CarDealershipService(AppDbContext context)
         {
             _context = context;
         }
-        public void AddCarDealership(CarDealershipVM carDealership)
+        public async Task AddCarDealership(CarDealershipVM carDealership)
         {
             var _carDealership = new CarDealership()
             {
@@ -20,14 +21,14 @@ namespace CarDealershipApplication.Data.Services
                 ContactNumber = carDealership.ContactNumber,
                 Email = carDealership.Email
             };
-            _context.CarDealerships.Add(_carDealership);
-            _context.SaveChanges();
+            await _context.CarDealerships.AddAsync(_carDealership);
+            await _context.SaveChangesAsync();
         }
-        public List<CarDealership> GetAllCarDealerships() => _context.CarDealerships.ToList();
-        public CarDealership GetCarDealershipById(int carDealershipId) => _context.CarDealerships.FirstOrDefault(n => n.Id == carDealershipId);
-        public CarDealership UpdateCarDealershipById(int carDealershipId ,CarDealershipVM carDealership)
+        public async Task<List<CarDealership>> GetAllCarDealerships() => await _context.CarDealerships.ToListAsync();
+        public async Task<CarDealership> GetCarDealershipById(int carDealershipId) => await _context.CarDealerships.FirstOrDefaultAsync(n => n.Id == carDealershipId);
+        public async Task<CarDealership> UpdateCarDealershipById(int carDealershipId ,CarDealershipVM carDealership)
         {
-            var _carDealership = _context.CarDealerships.FirstOrDefault(n => n.Id == carDealershipId);
+            var _carDealership = await _context.CarDealerships.FirstOrDefaultAsync(n => n.Id == carDealershipId);
             if(_carDealership != null )
             {
                 _carDealership.DealershipName = carDealership.DealershipName;
@@ -36,17 +37,17 @@ namespace CarDealershipApplication.Data.Services
                 _carDealership.ContactNumber = carDealership.ContactNumber;
                 _carDealership.Email = carDealership.Email;
 
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
             return _carDealership;
         }
-        public void DeleteCarDealershipById(int carDealershipId)
+        public async Task DeleteCarDealershipById(int carDealershipId)
         {
-            var _carDealership = _context.CarDealerships.FirstOrDefault(n => n.Id == carDealershipId);
+            var _carDealership = await _context.CarDealerships.FirstOrDefaultAsync(n => n.Id == carDealershipId);
             if(_carDealership != null ) 
             {
                 _context.CarDealerships.Remove(_carDealership);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
         }
     }

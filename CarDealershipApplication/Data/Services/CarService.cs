@@ -1,16 +1,17 @@
 ﻿using CarDealershipApplication.Data.Models;
 using CarDealershipApplication.Data.ViewModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace CarDealershipApplication.Data.Services
 {
-    public class CarService
+    public class CarService:ICarsService
     {
         private AppDbContext _context;
         public CarService(AppDbContext context)
         {
             _context = context;
         }
-        public void AddCar(CarVM car)
+        public async Task AddCar(CarVM car)
         {
             var _car = new Car()
             {
@@ -22,14 +23,14 @@ namespace CarDealershipApplication.Data.Services
                EngineType=car.EngineType,
                VIN=car.VIN
             };
-            _context.Cars.Add(_car);
-            _context.SaveChanges();
+            await _context.Cars.AddAsync(_car);
+            await _context.SaveChangesAsync();
         }
-        public List<Car> GetAllCars() => _context.Cars.ToList();
-        public Car GetCarById(int carId) => _context.Cars.FirstOrDefault(n => n.Id == carId);
-        public Car UpdateCarById(int carId, CarVM car)
+        public async Task<List<Car>> GetAllCars() => await _context.Cars.ToListAsync();
+        public async Task<Car> GetCarById(int carId) => await _context.Cars.FirstOrDefaultAsync(n => n.Id == carId);
+        public async Task<Car> UpdateCarById(int carId, CarVM car)
         {
-            var _car = _context.Cars.FirstOrDefault(n => n.Id == carId);
+            var _car = await _context.Cars.FirstOrDefaultAsync(n => n.Id == carId);
             if (_car != null)
             {
                 _car.Model = car.Model;
@@ -40,17 +41,17 @@ namespace CarDealershipApplication.Data.Services
                 _car.EngineType = car.EngineType;
                 _car.VIN = car.VIN;
 
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
             return _car;
         }
-        public void DeleteCarById(int carId)
+        public async Task DeleteCarById(int carId)
         {
-            var _car = _context.Cars.FirstOrDefault(n => n.Id == carId);
+            var _car = await _context.Cars.FirstOrDefaultAsync(n => n.Id == carId);
             if (_car != null)
             {
                 _context.Cars.Remove(_car);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
         }
     }

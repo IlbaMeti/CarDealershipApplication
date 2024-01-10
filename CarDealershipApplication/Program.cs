@@ -27,9 +27,10 @@ namespace CarDealershipApplication
                 options.UseSqlServer("Data Source=ILBA\\SQLEXPRESS;Initial Catalog=CarDealership-db;Integrated Security=True;Pooling=False;TrustServerCertificate=true");
             });
 
-            //Configure Services
-            builder.Services.AddScoped<CarDealershipService>();
-            builder.Services.AddScoped<CarService>();
+            // Configure Services
+            builder.Services.AddScoped<ICarDealershipsService , CarDealershipService>();
+            builder.Services.AddScoped<ICarsService , CarService>();
+
 
             var app = builder.Build();
 
