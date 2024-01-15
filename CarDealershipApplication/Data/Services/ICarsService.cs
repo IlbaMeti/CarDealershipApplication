@@ -5,10 +5,10 @@ namespace CarDealershipApplication.Data.Services
 {
     public interface ICarsService
     {
-        Task AddCar(CarVM car);
-        Task<List<Car>> GetAllCars();
-        Task<Car> GetCarById(int carId);
-        Task<Car> UpdateCarById(int carId, CarVM car);
-        Task DeleteCarById(int carId);
+        Task AddCarAsync(CarVM car);
+        Task<List<Car>> GetAllCarsAsync();
+        Task<Car> GetCarByIdAsync(int carId);
+        Task<Car> UpdateCarByIdAsync(int carId, CarVM car);
+        Task DeleteCarByIdAsync(int carId);
     }
 }

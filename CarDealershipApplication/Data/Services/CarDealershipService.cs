@@ -11,7 +11,7 @@ namespace CarDealershipApplication.Data.Services
         {
             _context = context;
         }
-        public async Task AddCarDealership(CarDealershipVM carDealership)
+        public async Task AddCarDealershipAsync(CarDealershipVM carDealership)
         {
             var _carDealership = new CarDealership()
             {
@@ -24,9 +24,9 @@ namespace CarDealershipApplication.Data.Services
             await _context.CarDealerships.AddAsync(_carDealership);
             await _context.SaveChangesAsync();
         }
-        public async Task<List<CarDealership>> GetAllCarDealerships() => await _context.CarDealerships.ToListAsync();
-        public async Task<CarDealership> GetCarDealershipById(int carDealershipId) => await _context.CarDealerships.FirstOrDefaultAsync(n => n.Id == carDealershipId);
-        public async Task<CarDealership> UpdateCarDealershipById(int carDealershipId ,CarDealershipVM carDealership)
+        public async Task<List<CarDealership>> GetAllCarDealershipsAsync() => await _context.CarDealerships.ToListAsync();
+        public async Task<CarDealership> GetCarDealershipByIdAsync(int carDealershipId) => await _context.CarDealerships.FirstOrDefaultAsync(n => n.Id == carDealershipId);
+        public async Task<CarDealership> UpdateCarDealershipByIdAsync(int carDealershipId ,CarDealershipVM carDealership)
         {
             var _carDealership = await _context.CarDealerships.FirstOrDefaultAsync(n => n.Id == carDealershipId);
             if(_carDealership != null )
@@ -41,7 +41,7 @@ namespace CarDealershipApplication.Data.Services
             }
             return _carDealership;
         }
-        public async Task DeleteCarDealershipById(int carDealershipId)
+        public async Task DeleteCarDealershipByIdAsync(int carDealershipId)
         {
             var _carDealership = await _context.CarDealerships.FirstOrDefaultAsync(n => n.Id == carDealershipId);
             if(_carDealership != null ) 

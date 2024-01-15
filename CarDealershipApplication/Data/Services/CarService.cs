@@ -11,7 +11,7 @@ namespace CarDealershipApplication.Data.Services
         {
             _context = context;
         }
-        public async Task AddCar(CarVM car)
+        public async Task AddCarAsync(CarVM car)
         {
             var _car = new Car()
             {
@@ -26,9 +26,9 @@ namespace CarDealershipApplication.Data.Services
             await _context.Cars.AddAsync(_car);
             await _context.SaveChangesAsync();
         }
-        public async Task<List<Car>> GetAllCars() => await _context.Cars.ToListAsync();
-        public async Task<Car> GetCarById(int carId) => await _context.Cars.FirstOrDefaultAsync(n => n.Id == carId);
-        public async Task<Car> UpdateCarById(int carId, CarVM car)
+        public async Task<List<Car>> GetAllCarsAsync() => await _context.Cars.ToListAsync();
+        public async Task<Car> GetCarByIdAsync(int carId) => await _context.Cars.FirstOrDefaultAsync(n => n.Id == carId);
+        public async Task<Car> UpdateCarByIdAsync(int carId, CarVM car)
         {
             var _car = await _context.Cars.FirstOrDefaultAsync(n => n.Id == carId);
             if (_car != null)
@@ -45,7 +45,7 @@ namespace CarDealershipApplication.Data.Services
             }
             return _car;
         }
-        public async Task DeleteCarById(int carId)
+        public async Task DeleteCarByIdAsync(int carId)
         {
             var _car = await _context.Cars.FirstOrDefaultAsync(n => n.Id == carId);
             if (_car != null)

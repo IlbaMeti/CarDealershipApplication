@@ -9,8 +9,8 @@ namespace CarDealershipApplication.Controllers
     [ApiController]
     public class CarsController : ControllerBase
     {
-        public CarService _carService;
-        public CarsController(CarService carService)
+        public ICarsService _carService;
+        public CarsController(ICarsService carService)
         {
             _carService = carService;
         }
@@ -18,35 +18,35 @@ namespace CarDealershipApplication.Controllers
         [HttpGet("get-all")]
         public async Task<IActionResult> GetAllCars()
         {
-            var allCars = await _carService.GetAllCars();
+            var allCars = await _carService.GetAllCarsAsync();
             return Ok(allCars);
         }
 
         [HttpGet("get-by-Id/{id}")]
         public async Task<IActionResult> GetCarById(int id)
         {
-            var carById = await _carService.GetCarById(id);
+            var carById = await _carService.GetCarByIdAsync(id);
             return Ok(carById);
         }
 
         [HttpPost("add")]
         public async Task<IActionResult> AddCar([FromBody] CarVM car)
         {
-            await _carService.AddCar(car);
+            await _carService.AddCarAsync(car);
             return Ok();
         }
 
         [HttpPut("update-by-id/{id}")]
         public async Task<IActionResult> UpdateCarById(int id, [FromBody] CarVM car)
         {
-            var updatedCar = await _carService.UpdateCarById(id, car);
+            var updatedCar = await _carService.UpdateCarByIdAsync(id, car);
             return Ok(updatedCar);
         }
 
         [HttpDelete("delete-by-id/{id}")]
         public async Task<IActionResult> DeleteCarById(int id)
         {
-            await _carService.DeleteCarById(id);
+            await _carService.DeleteCarByIdAsync(id);
             return Ok();
         }
     }
