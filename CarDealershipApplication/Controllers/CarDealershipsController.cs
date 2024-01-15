@@ -10,44 +10,44 @@ namespace CarDealershipApplication.Controllers
     [ApiController]
     public class CarDealershipsController : ControllerBase
     {
-        public CarDealershipService _carDealershipService;
-        public CarDealershipsController(CarDealershipService carDealershipService)
+        public ICarDealershipsService _carDealershipService;
+        public CarDealershipsController(ICarDealershipsService carDealershipService)
         {
             _carDealershipService = carDealershipService;
         }
 
-        [HttpGet("get-all-carDealerships")]
-        public IActionResult GetAllCarDealerships() 
+        [HttpGet("get-all")]
+        public async Task<IActionResult> GetAllCarDealerships() 
         {
-            var allCarDealerships= _carDealershipService.GetAllCarDealerships();
+            var allCarDealerships= await _carDealershipService.GetAllCarDealerships();
             return Ok(allCarDealerships);
         }
 
-        [HttpGet("get-carDealership-by-Id/{id}")]
-        public IActionResult GetCarDealershipById(int id)
+        [HttpGet("get-by-id/{id}")]
+        public async Task<IActionResult> GetCarDealershipById(int id)
         {
-            var carDealershipById = _carDealershipService.GetCarDealershipById(id);
+            var carDealershipById = await _carDealershipService.GetCarDealershipById(id);
             return Ok(carDealershipById);
         }
 
-        [HttpPost("add-carDealership")]
-        public IActionResult AddCarDealership([FromBody]CarDealershipVM carDealership)
+        [HttpPost("add")]
+        public async Task<IActionResult> AddCarDealership([FromBody]CarDealershipVM carDealership)
         {
-            _carDealershipService.AddCarDealership(carDealership);
+            await _carDealershipService.AddCarDealership(carDealership);
             return Ok();
         }
 
-        [HttpPut("update-carDealership-by-id/{id}")]
-        public IActionResult UpdateCarDealershipById(int id, [FromBody]CarDealershipVM carDealership)
+        [HttpPut("update-by-id/{id}")]
+        public async Task<IActionResult> UpdateCarDealershipById(int id, [FromBody]CarDealershipVM carDealership)
         {
-            var updatedCarDealership=_carDealershipService.UpdateCarDealershipById(id, carDealership);
+            var updatedCarDealership=await _carDealershipService.UpdateCarDealershipById(id, carDealership);
             return Ok(updatedCarDealership);
         }
 
-        [HttpDelete("delete-carDealership-by-id/{id}")]
-        public IActionResult DeleteCarDealershipById(int id)
+        [HttpDelete("delete-by-id/{id}")]
+        public async Task<IActionResult> DeleteCarDealershipById(int id)
         {
-            _carDealershipService.DeleteCarDealershipById(id);
+            await _carDealershipService.DeleteCarDealershipById(id);
             return Ok();
         }
 

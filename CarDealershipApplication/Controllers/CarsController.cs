@@ -15,38 +15,38 @@ namespace CarDealershipApplication.Controllers
             _carService = carService;
         }
 
-        [HttpGet("get-all-cars")]
-        public IActionResult GetAllCars()
+        [HttpGet("get-all")]
+        public async Task<IActionResult> GetAllCars()
         {
-            var allCars = _carService.GetAllCars();
+            var allCars = await _carService.GetAllCars();
             return Ok(allCars);
         }
 
-        [HttpGet("get-car-by-Id/{id}")]
-        public IActionResult GetCarById(int id)
+        [HttpGet("get-by-Id/{id}")]
+        public async Task<IActionResult> GetCarById(int id)
         {
-            var carById = _carService.GetCarById(id);
+            var carById = await _carService.GetCarById(id);
             return Ok(carById);
         }
 
-        [HttpPost("add-car")]
-        public IActionResult AddCar([FromBody] CarVM car)
+        [HttpPost("add")]
+        public async Task<IActionResult> AddCar([FromBody] CarVM car)
         {
-            _carService.AddCar(car);
+            await _carService.AddCar(car);
             return Ok();
         }
 
-        [HttpPut("update-car-by-id/{id}")]
-        public IActionResult UpdateCarById(int id, [FromBody] CarVM car)
+        [HttpPut("update-by-id/{id}")]
+        public async Task<IActionResult> UpdateCarById(int id, [FromBody] CarVM car)
         {
-            var updatedCar = _carService.UpdateCarById(id, car);
+            var updatedCar = await _carService.UpdateCarById(id, car);
             return Ok(updatedCar);
         }
 
-        [HttpDelete("delete-car-by-id/{id}")]
-        public IActionResult DeleteCarById(int id)
+        [HttpDelete("delete-by-id/{id}")]
+        public async Task<IActionResult> DeleteCarById(int id)
         {
-            _carService.DeleteCarById(id);
+            await _carService.DeleteCarById(id);
             return Ok();
         }
     }

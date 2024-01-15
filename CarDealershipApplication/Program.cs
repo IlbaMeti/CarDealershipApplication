@@ -28,8 +28,8 @@ namespace CarDealershipApplication
             });
 
             // Configure Services
-            builder.Services.AddScoped<ICarDealershipsService , CarDealershipService>();
-            builder.Services.AddScoped<ICarsService , CarService>();
+            builder.Services.AddScoped<ICarDealershipsService, CarDealershipService>();
+            builder.Services.AddScoped<ICarsService, CarService>();
 
 
             var app = builder.Build();
